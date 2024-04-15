@@ -22,7 +22,7 @@ app.get('/saludar/:nombre', (req, res) => {
 
 app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {
     let fecha = req.params.ano + '-' + req.params.mes + '-' + req.params.dia
-    let numFecha = Date.parse(date)
+    let numFecha = Date.parse(fecha)
     if (numFecha != null){
         res.status(200).send('OK (200)')
     } else{
@@ -31,22 +31,22 @@ app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {
 })
 
 app.get('/matematica/sumar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = req.params.n1 + req.params.n2
+    let resultado = sumar(req.params.n1, req.params.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/restar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = req.params.n1 - req.params.n2
+    let resultado = restar(req.params.n1, req.params.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/multiplicar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = req.params.n1 * req.params.n2
+    let resultado = multiplicar(req.params.n1, req.params.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/dividir?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = req.params.n1 / req.params.n2
+    let resultado = dividir(req.params.n1, req.params.n2)
     if(req.params.n2 != 0){
         res.status(200).send('El resultado es ' + resultado + ' (200)') 
     } else{
@@ -89,10 +89,9 @@ app.delete('/alumnos', (req, res) => {
     if(alumnosArray.find(req.body.dni)){
         res.status(200).send('OK (200)')
     } else{
-        res.status(400).send('No se encontro (404)')
+        res.status(404).send('No se encontro (404)')
     }
 })
-
 
 
 app.get('/', (req, res) => { // EndPoint "/"
