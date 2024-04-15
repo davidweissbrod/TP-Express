@@ -2,6 +2,7 @@ import Alumno from "./models/alumno.js"
 import {sumar, restar, multiplicar, dividir} from "./modules/matematica.js"
 import {OMDBSearchByPage, OMDBSearchComplete, OMDBGetByImdbID} from
 "./modules/omdb-wrapper.js"
+import ValidacionesHelper from './src/modules/validaciones-helper.js'
 
 import express from "express"; 
 import cors from "cors"; 
@@ -31,22 +32,22 @@ app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {
 })
 
 app.get('/matematica/sumar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = sumar(req.params.n1, req.params.n2)
+    let resultado = sumar(req.query.n1, req.query.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/restar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = restar(req.params.n1, req.params.n2)
+    let resultado = restar(req.query.n1, req.query.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/multiplicar?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = multiplicar(req.params.n1, req.params.n2)
+    let resultado = multiplicar(req.query.n1, req.query.n2)
     res.status(200).send('El resultado es ' + resultado + ' (200)') 
 })
 
 app.get('/matematica/dividir?n1={numero}&n2={numero}', (req, res) => {
-    let resultado = dividir(req.params.n1, req.params.n2)
+    let resultado = dividir(req.query.n1, req.query.n2)
     if(req.params.n2 != 0){
         res.status(200).send('El resultado es ' + resultado + ' (200)') 
     } else{
@@ -92,7 +93,6 @@ app.delete('/alumnos', (req, res) => {
         res.status(404).send('No se encontro (404)')
     }
 })
-
 
 app.get('/', (req, res) => { // EndPoint "/"
 res.send('Ya estoy respondiendo!');
