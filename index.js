@@ -1,7 +1,7 @@
 import express from "express"; // hacer npm i express
 import cors from "cors"; // hacer npm i cors
 import  {sumar, restar, dividir, multiplicar} from './modules/matematica.js'
-import { OMDBGetByImdbID, OMDBSearchByPage, OMDBSearchComplete } from "./modules/OMDBWrapper.js";
+import { OMDBGetByImdbID, OMDBSearchByPage, OMDBSearchComplete } from "./modules/omdb-wrapper.js";
 import Alumno from "./models/alumno.js";
 
 const app = express();
@@ -23,9 +23,8 @@ app.get('/saludar/:nombre', (req, res) => {
 })
 
 app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {
-    let fecha = req.params.ano + '-' + req.params.mes + '-' + req.params.dia
-    let numFecha = Date.parse(fecha)
-    if (numFecha != null){
+    let fecha = new Date(req.params.ano, req.params.mes, req.params.dia)
+    if (!isNaN(fecha)){
         res.status(200).send('OK (200)')
     } else{
         res.status(400).send('Error (404)')
