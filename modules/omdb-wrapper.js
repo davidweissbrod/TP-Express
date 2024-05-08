@@ -1,50 +1,49 @@
 import axios from "axios";
-const APIKEY = "7b62fa5d";
-const OMDB_API_URL = "https://www.omdbapi.com/"
+
+const apiKey = '11f72b82'
+const apiUrl = 'http://www.omdbapi.com/?apikey='
+
 const OMDBSearchByPage = async (searchText, page = 1) => {
-    try{
-        const response = await axios.get(OMDB_API_URL,{
-            params: {
-                apikey: APIKEY,
-                s: searchText,
-                page: page
-            }
-        });
-        return response.data
-    }catch(error){
-        console.log('No se encontro la pagina: ', error)
-        return null;
-    }  
+    let obj = {
+    respuesta : false,
+    resultados : 0,
+    data : {}
+};
+    const request = `${apiUrl}${apiKey}&s=${searchText}&page=${page}`
+    const api = await axios.get(request)
+    obj.respuesta = api.statusText
+    obj.data = api.data.Search
+    obj.resultados = api.data.totalResults
+    return obj
 };
 
 const OMDBSearchComplete = async (searchText) => {
-    try{
-        const response = await axios.get(OMDB_API_URL,{
-            params: {
-                apikey: APIKEY,
-                s: searchText,
-            }
-        });
-        return response.data
-    }catch(error){
-        console.log('No se encontro la pagina: ', error)
-        return null;
-    }  
-};
-const OMDBGetByImdbID = async (imdbID) => {
-    try{
-        const response = await axios.get(OMDB_API_URL,{
-            params: {
-                apikey: APIKEY,
-                i: imdbID
-            }
-        });
-        return response.data
-    }catch(error){
-        console.log('No se encontro la pagina: ', error)
-        return null;
-    }  
 
+    let obj = {
+    respuesta : false,
+    resultados : 0,
+    data : {}
 };
-// Exporto todo lo que yo quiero exponer del módulo:
-export {OMDBSearchByPage, OMDBSearchComplete, OMDBGetByImdbID}
+    const request = `${apiUrl}${apiKey}&s=${searchText}`
+    const api = await axios.get(request)
+    obj.respuesta = api.statusText
+    obj.data = api.data.Search
+    obj.resultados = api.data.totalResults
+    return obj
+};
+
+const OMDBGetByImdbID = async (imdbID) => {
+    let obj = {
+    respuesta : false,
+    resultados : 0,
+    datos : {}
+};
+    const request = `${apiUrl}${apiKey}&i=${imdbID}`
+    const api = await axios.get(request)
+    obj.respuesta = api.statusText
+    obj.datos = api.data.Search
+    obj.resultados = api.data.totalResults
+    return obj
+};
+
+export {OMDBSearchByPage, OMDBSearchComplete, OMDBGetByImdbID};
